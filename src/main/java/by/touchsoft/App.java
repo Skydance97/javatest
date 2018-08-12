@@ -1,8 +1,6 @@
 package by.touchsoft;
 
-import by.touchsoft.processor.Processor;
-
-import java.util.*;
+import by.touchsoft.core.TaskExecutor;
 
 /**
  * @author Alexander Shukaylo
@@ -11,11 +9,20 @@ import java.util.*;
 public class App {
 
     public static void main(String[] args) {
-        Objects.requireNonNull(args, "Program arguments can't be null");
-        for (String arg : args) {
-            Processor processor = new Processor();
-            System.out.println("The maximum number of employees at the same time in 'Super Power Soft' office: " +
-                    processor.process(arg));
+        try {
+            if (args.length == 0) {
+                throw new IllegalArgumentException("For correct execution " +
+                        "of the application it's necessary to add arguments");
+            }
+
+            for (String arg : args) {
+                TaskExecutor taskExecutor = new TaskExecutor();
+                System.out.println("The maximum number of employees " +
+                        "at the same time in 'Super Power Soft' office: " +
+                        taskExecutor.execute(arg));
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 }
